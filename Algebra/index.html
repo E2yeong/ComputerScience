@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boolean Algebra for Computer Science: Laws, Forms, and Applications</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans KR", sans-serif;
+           line-height: 1.7; margin: 0; background: #f8f9fa; color: #222; }
+    header { background: #2c3e50; color: white; padding: 1.6rem 1rem; text-align: center; }
+    header h1 { margin: 0; font-size: 1.6rem; }
+    main { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+    section { background: #fff; border: 1px solid #e6e9ef; border-radius: 12px; box-shadow: 0 6px 14px rgba(0,0,0,.06);
+              padding: 1.5rem; margin-bottom: 1.25rem; }
+    h2 { border-bottom: 2px solid #f0f2f5; padding-bottom: .4rem; margin: 0 0 1rem; color: #2c3e50; font-size: 1.25rem; }
+    h3 { margin: 1.1rem 0 .5rem; color: #34495e; }
+    .grid { display: grid; gap: 1rem; }
+    @media (min-width: 900px) { .two { grid-template-columns: 1fr 1fr; } }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #e6e9ef; padding: .55rem .6rem; text-align: center; }
+    th { background: #f6f7f9; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+    pre { background: #f6f8fb; border: 1px solid #e6e9ef; border-radius: 10px; padding: .8rem 1rem; overflow-x: auto; }
+    .note { background: #fff8e1; border: 1px solid #ffe69c; border-left: 4px solid #ffcc00; padding: .8rem 1rem; border-radius: 10px; }
+    .example { background: #eef7ff; border: 1px solid #d6e8fb; border-left: 4px solid #3498db; padding: .8rem 1rem; border-radius: 10px; }
+    ul { margin: .35rem 0 .25rem 1.1rem; }
+    li { margin: .25rem 0; }
+    .kbd { background: #f1f3f5; border: 1px solid #dee2e6; padding: .05rem .4rem; border-radius: 6px; }
+    .badge { display: inline-block; padding: .15rem .45rem; background: #eef7ff; border: 1px solid #d6e8fb; border-radius: 6px; color: #1a64a6; font-size: .85rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Boolean Algebra for Computer Science</h1>
+    <p style="margin:.35rem 0 0; opacity:.9">Laws, canonical forms, simplification, and real CS applications</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>1) What is Boolean Algebra?</h2>
+      <p><strong>Boolean Algebra</strong> is the algebra of two values: <span class="badge">0 (False)</span> and <span class="badge">1 (True)</span>. Formalized by <em>George Boole</em> in the 19th century, it underpins all digital computing: logic gates, circuits, programming conditionals, databases, and even cryptography rely on Boolean logic.</p>
+      <div class="note">Computers operate using binary signals (ON/OFF). Boolean expressions are the language that describes how these signals combine, transform, and control computation.</div>
+    </section>
+
+    <section>
+      <h2>2) Primitives: Values & Operators</h2>
+      <h3>2.1 Values</h3>
+      <ul>
+        <li><strong>0 (False)</strong>, <strong>1 (True)</strong></li>
+      </ul>
+      <h3>2.2 Operators (basic)</h3>
+      <ul>
+        <li><strong>NOT</strong> (¬A or \(\overline{A}\)): logical negation</li>
+        <li><strong>AND</strong> (A ∧ B or AB): true only if both are true</li>
+        <li><strong>OR</strong> (A ∨ B): true if at least one is true</li>
+        <li><strong>XOR</strong> (A ⊕ B): true if inputs differ (addition mod 2)</li>
+      </ul>
+      <h3>2.3 Operator precedence (typical)</h3>
+      <p><code>NOT</code> &gt; <code>AND</code> &gt; <code>XOR</code> &gt; <code>OR</code> (use parentheses to be explicit).</p>
+    </section>
+
+    <section>
+      <h2>3) Truth Tables</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>A</th><th>B</th><th>NOT A</th><th>A ∧ B</th><th>A ∨ B</th><th>A ⊕ B</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+          <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+          <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+          <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+        </tbody>
+      </table>
+      <div class="example">
+        <strong>XOR as a formula:</strong> \(A \oplus B = (A \land \neg B) \lor (\neg A \land B)\).
+      </div>
+    </section>
+
+    <section>
+      <h2>4) Core Laws & Properties</h2>
+      <div class="grid two">
+        <div>
+          <h3>Identity / Null</h3>
+          <ul>
+            <li>\(A \lor 0 = A\), \(A \land 1 = A\)</li>
+            <li>\(A \lor 1 = 1\), \(A \land 0 = 0\) (domination)</li>
+          </ul>
+          <h3>Complement & Involution</h3>
+          <ul>
+            <li>\(A \lor \neg A = 1\), \(A \land \neg A = 0\)</li>
+            <li>\(\neg(\neg A) = A\)</li>
+          </ul>
+          <h3>Idempotent</h3>
+          <ul>
+            <li>\(A \lor A = A\), \(A \land A = A\)</li>
+          </ul>
+          <h3>Commutative & Associative</h3>
+          <ul>
+            <li>\(A \lor B = B \lor A\), \(A \land B = B \land A\)</li>
+            <li>\((A \lor B) \lor C = A \lor (B \lor C)\)</li>
+            <li>\((A \land B) \land C = A \land (B \land C)\)</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Distributive</h3>
+          <ul>
+            <li>\(A \lor (B \land C) = (A \lor B) \land (A \lor C)\)</li>
+            <li>\(A \land (B \lor C) = (A \land B) \lor (A \land C)\)</li>
+          </ul>
+          <h3>De Morgan’s</h3>
+          <ul>
+            <li>\(\neg(A \land B) = \neg A \lor \neg B\)</li>
+            <li>\(\neg(A \lor B) = \neg A \land \neg B\)</li>
+          </ul>
+          <h3>Absorption</h3>
+          <ul>
+            <li>\(A \lor (A \land B) = A\)</li>
+            <li>\(A \land (A \lor B) = A\)</li>
+          </ul>
+          <h3>Consensus (useful in minimization)</h3>
+          <ul>
+            <li>\(AB \lor A'C \lor BC = AB \lor A'C\)</li>
+          </ul>
+        </div>
+      </div>
+      <h3>Duality Principle</h3>
+      <p>Replace \(\land \leftrightarrow \lor\), \(0 \leftrightarrow 1\) in any valid identity to get another valid identity.</p>
+      <h3>Functional completeness</h3>
+      <p><strong>NAND</strong> alone (or <strong>NOR</strong> alone) can express all Boolean functions—key insight for building hardware from a single gate type.</p>
+    </section>
+
+    <section>
+      <h2>5) Boolean Functions & Canonical Forms</h2>
+      <h3>5.1 Minterms / Maxterms</h3>
+      <ul>
+        <li><strong>Minterm</strong>: product (AND) term that uniquely selects one row where the function is 1.</li>
+        <li><strong>Maxterm</strong>: sum (OR) term that uniquely selects one row where the function is 0.</li>
+      </ul>
+      <h3>5.2 SOP / POS</h3>
+      <ul>
+        <li><strong>Sum of Products (SOP)</strong>: OR of minterms (common in combinational logic design).</li>
+        <li><strong>Product of Sums (POS)</strong>: AND of maxterms.</li>
+      </ul>
+      <div class="example">
+        <strong>Example (2 variables):</strong> Suppose \(f(A,B)=1\) on rows (A,B) = (0,1), (1,0).  
+        SOP: \(f = \neg A B \; \lor \; A \neg B\) (this is XOR).  
+        POS: \(f = (A \lor B) \land (\neg A \lor \neg B)\).
+      </div>
+      <h3>5.3 Minimization</h3>
+      <ul>
+        <li><strong>Algebraic</strong> (use identities: absorption, consensus, etc.)</li>
+        <li><strong>Karnaugh Map (K-map)</strong> (visual grouping of 1s in powers of two)</li>
+        <li><strong>Quine–McCluskey</strong> (systematic algorithm; good for tooling/automation)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6) From Algebra to Hardware</h2>
+      <h3>6.1 Logic Gates</h3>
+      <ul>
+        <li>Basic: NOT, AND, OR, XOR</li>
+        <li>Universal: NAND, NOR (functionally complete)</li>
+      </ul>
+      <h3>6.2 Combinational vs Sequential</h3>
+      <ul>
+        <li><strong>Combinational</strong>: output depends only on current inputs (Boolean function).</li>
+        <li><strong>Sequential</strong>: output depends on inputs <em>and</em> stored state (flip-flops, latches; clocked).</li>
+      </ul>
+      <h3>6.3 Practical concerns</h3>
+      <ul>
+        <li><strong>Propagation delay</strong>: each gate adds delay; critical path limits clock speed.</li>
+        <li><strong>Logic levels & noise margins</strong>: robustness to voltage variations.</li>
+        <li><strong>Hazards/glitches</strong>: transients due to unequal delays—minimized by careful design or redundancy.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7) Programming & Software Uses</h2>
+      <div class="grid two">
+        <div>
+          <h3>Conditionals & control flow</h3>
+          <ul>
+            <li><code>if</code>, <code>while</code>, <code>for</code> conditions are Boolean expressions.</li>
+            <li>Short-circuit semantics: in many languages, <code>A && B</code> doesn’t evaluate <code>B</code> if <code>A</code> is false.</li>
+          </ul>
+          <h3>Bitwise operations</h3>
+          <ul>
+            <li><code>&amp;</code>, <code>|</code>, <code>^</code> (XOR), <code>~</code> (NOT), shifts: masks, flags, fast sets/maps.</li>
+            <li>XOR properties: \(x \oplus x = 0\), \(x \oplus 0 = x\), \(x \oplus y \oplus x = y\).</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Databases & IR</h3>
+          <ul>
+            <li>Queries use Boolean connectives: <code>WHERE (A AND B) OR (C AND NOT D)</code>.</li>
+            <li>Search engines: Boolean retrieval models; filters and must/should/must_not logic.</li>
+          </ul>
+          <h3>Cybersecurity</h3>
+          <ul>
+            <li>Stream ciphers and one-time pad: XOR is fundamental (bitwise addition mod 2).</li>
+            <li>Parity, checksums, Bloom filters: Boolean/bitwise reasoning at scale.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>8) Worked Examples</h2>
+      <h3>8.1 Build a truth table in Python</h3>
+      <pre># XOR truth table
+import itertools
+
+def truth_table(expr):
+    print("A B | Result")
+    for A, B in itertools.product([0,1],[0,1]):
+        print(A, B, "|", int(expr(A,B)))
+
+truth_table(lambda A,B: (A and not B) or (not A and B))</pre>
+
+      <h3>8.2 Simplify with identities</h3>
+      <div class="example">
+        <strong>Given:</strong> \(f = A\overline{B} + AB + \overline{A}B\)  
+        Factor: \(f = A(\overline{B}+B) + \overline{A}B = A \cdot 1 + \overline{A}B = A + \overline{A}B\)  
+        Absorption: \(A + \overline{A}B = (A + \overline{A})(A + B) = 1 \cdot (A+B) = A + B\).
+      </div>
+
+      <h3>8.3 Canonical forms (SOP/POS)</h3>
+      <p>From a truth table, list minterms where \(f=1\) to get SOP; list maxterms where \(f=0\) to get POS. Use K-maps to combine adjacent 1s (powers of two) and minimize.</p>
+    </section>
+
+    <section>
+      <h2>9) Reflection</h2>
+      <p>It’s striking that the entire digital world is composed from 0 and 1. A handful of laws and gates scale up to CPUs, memory hierarchies, networks, operating systems, and AI stacks. Boolean Algebra is not “just math”—it’s the language of computation.</p>
+    </section>
+  </main>
+</body>
+</html>
