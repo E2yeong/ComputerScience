@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sorting Bench (Bubble / Merge / Quick)</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; background:#f9fafc; }
+    h1 { font-size:1.8rem; }
+    button {
+      padding:.6rem 1rem; margin:.3rem;
+      border:1px solid #ccc; border-radius:.4rem;
+      background:#2b5ed2; color:white; cursor:pointer;
+    }
+    button:hover { background:#1f47a3; }
+    #chartBox { max-width:800px; margin-top:2rem; }
+  </style>
+</head>
+<body>
+  <h1>🔎 Sorting Bench</h1>
+  <p>버블, 머지, 퀵 정렬의 성능을 데이터 크기에 따라 비교합니다.</p>
+  <button onclick="runBench()">실험 실행</button>
+  <div id="chartBox">
+    <canvas id="benchChart"></canvas>
+  </div>
+
+  <script>
+    // ---------------------------
+    // 정렬 알고리즘
+    // ---------------------------
+    function bubbleSort(arr) {
+      let n = arr.length;
+      for(let i=0;i<n-1;i++){
+        for(let j=0;j<n-i-1;j++){
+          if(arr[j]>arr[j+1]){
+            [arr[j],arr[j+1]]=[arr[j+1],arr[j]];
+          }
+        }
+      }
+      return arr;
+    }
+
+    function mergeSort(arr) {
+      if (arr.length <= 1) return arr;
+      const mid = Math.floor(arr.length/2);
+      const left = mergeSort(arr.slice(0,mid));
+      const right = mergeSort(arr.slice(mid));
+      return merge(left,right);
+    }
+    function merge(left,right){
+      let result=[],i=0,j=0;
+      while(i<left.length && j<right.length){
+        if(left[i]<right[j]) result.push(left[i++]);
+        else result.push(right[j++]);
+      }
+      return result.concat(left.slice(i)).concat(right.slice(j));
+    }
+
+    function quickSort(arr) {
+      if(arr.length<=1) return arr;
+      const pivot = arr[arr.length-1];
+      const left=[],right=[];
+      for(let i=0;i<arr.length-1;i++){
+        if(arr[i]<pivot) left.push(arr[i]);
+        else right.push(arr[i]);
+      }
+      return [...quickSort(left),pivot,...quickSort(right)];
+    }
+
+    // ---------------------------
+    // 성능 측정
+    // ---------------------------
+    function measure(fn, arr) {
+      const copy = arr.slice();
+      const t0 = performance.now();
+      fn(copy);
+      const t1 = performance.now();
+      return t1 - t0;
+    }
+
+    async function runBench() {
+      const sizes = [200, 500, 1000, 2000, 4000];
+      const bubbleTimes=[], mergeTimes=[], quickTimes=[];
+
+      for (let n of sizes) {
+        const arr = Array.from({length:n},()=>Math.floor(Math.random()*10000));
+        bubbleTimes.push(measure(bubbleSort, arr));
+        mergeTimes.push(measure(mergeSort, arr));
+        quickTimes.push(measure(quickSort, arr));
+        await new Promise(r=>setTimeout(r,100)); // UI 갱신 여유
+      }
+
+      drawChart(sizes, bubbleTimes, mergeTimes, quickTimes);
+    }
+
+    // ---------------------------
+    // Chart.js 그래프
+    // ---------------------------
+    let chart;
+    function drawChart(sizes, bubble, merge, quick) {
+      const ctx=document.getElementById("benchChart").getContext("2d");
+      if(chart) chart.destroy();
+      chart=new Chart(ctx,{
+        type:"line",
+        data:{
+          labels:sizes,
+          datasets:[
+            {label:"Bubble Sort",data:bubble,borderColor:"red",fill:false},
+            {label:"Merge Sort",data:merge,borderColor:"blue",fill:false},
+            {label:"Quick Sort",data:quick,borderColor:"green",fill:false}
+          ]
+        },
+        options:{
+          responsive:true,
+          plugins:{legend:{position:"top"}},
+          scales:{y:{title:{display:true,text:"Time (ms)"}}}
+        }
+      });
+    }
+  </script>
+</body>
+</html>
