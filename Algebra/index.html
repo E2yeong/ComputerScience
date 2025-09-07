@@ -31,6 +31,17 @@
     li { margin: .25rem 0; }
     .kbd { background: #f1f3f5; border: 1px solid #dee2e6; padding: .05rem .4rem; border-radius: 6px; }
     .badge { display: inline-block; padding: .15rem .45rem; background: #eef7ff; border: 1px solid #d6e8fb; border-radius: 6px; color: #1a64a6; font-size: .85rem; }
+      .Link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      padding: 0.6rem 1.2rem;
+      background: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      margin-left: 30%;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
@@ -41,6 +52,8 @@
 
   <main>
     <section>
+      <p class="meta">Originally posted on 2025.09.04(Naver Blog)</p>
+      <a href="https://e2yeong.github.io/ComputerScience/Algebra/Projects/"><p class="Link">Test</p></a>
       <h2>1) What is Boolean Algebra?</h2>
       <p><strong>Boolean Algebra</strong> is the algebra of two values: <span class="badge">0 (False)</span> and <span class="badge">1 (True)</span>. Formalized by <em>George Boole</em> in the 19th century, it underpins all digital computing: logic gates, circuits, programming conditionals, databases, and even cryptography rely on Boolean logic.</p>
       <div class="note">Computers operate using binary signals (ON/OFF). Boolean expressions are the language that describes how these signals combine, transform, and control computation.</div>
@@ -240,5 +253,7 @@ truth_table(lambda A,B: (A and not B) or (not A and B))</pre>
       <p>It’s striking that the entire digital world is composed from 0 and 1. A handful of laws and gates scale up to CPUs, memory hierarchies, networks, operating systems, and AI stacks. Boolean Algebra is not “just math”—it’s the language of computation.</p>
     </section>
   </main>
+  <a href="https://e2yeong.github.io/ComputerScience"><p class="Link">Back</p></a>
+  <a href="https://e2yeong.github.io/CyberSecurity-Lab/Report/Report2"><p class="Link">Next</p></a>
 </body>
 </html>
