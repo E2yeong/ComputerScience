@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Graph Theory — Comprehensive Study Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root{
+      --bg:#f8f9fa; --fg:#222; --card:#fff; --muted:#6b7280; --brand:#2c3e50; --accent:#1d6fdc; --border:#e6e9ef;
+      --note:#fff8e1; --note-b:#ffe69c; --info:#eef7ff; --info-b:#d6e8fb; --ok:#e8f7ef; --ok-b:#bfe9d1;
+    }
+    *{box-sizing:border-box}
+    body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,sans-serif;margin:0;line-height:1.7;color:var(--fg);background:var(--bg)}
+    header{background:var(--brand);color:#fff;text-align:center;padding:1.6rem 1rem}
+    header h1{margin:0 0 .25rem;font-size:1.65rem}
+    header p{margin:0;opacity:.9}
+    main{max-width:1100px;margin:2rem auto;padding:0 1rem}
+    nav.toc{background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.06);padding:1.2rem;margin-bottom:1.25rem}
+    nav.toc a{color:var(--accent);text-decoration:none}
+    nav.toc a:hover{text-decoration:underline}
+    section{background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.06);padding:1.5rem;margin-bottom:1.25rem}
+    h2{margin:0 0 1rem;color:var(--brand);border-bottom:2px solid #f0f2f5;padding-bottom:.45rem;font-size:1.25rem}
+    h3{margin:1rem 0 .4rem;color:#34495e}
+    h4{margin:.7rem 0 .2rem;color:#3b4b63}
+    p code, li code{background:#f6f8fb;border:1px solid var(--border);border-radius:6px;padding:.1rem .35rem}
+    pre{background:#f6f8fb;border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;overflow:auto}
+    .note{background:var(--note);border:1px solid var(--note-b);border-left:4px solid #ffcc00;padding:.8rem 1rem;border-radius:10px}
+    .info{background:var(--info);border:1px solid var(--info-b);border-left:4px solid var(--accent);padding:.8rem 1rem;border-radius:10px}
+    .ok{background:var(--ok);border:1px solid var(--ok-b);border-left:4px solid #29a36a;padding:.8rem 1rem;border-radius:10px}
+    .grid{display:grid;gap:1rem}
+    @media(min-width:940px){ .two{grid-template-columns:1fr 1fr} .three{grid-template-columns:1fr 1fr 1fr} }
+    ul{margin:.35rem 0 .25rem 1.1rem} li{margin:.25rem 0}
+    table{border-collapse:collapse;width:100%;margin:.6rem 0}
+    th,td{border:1px solid var(--border);padding:.5rem .6rem;text-align:center}
+    th{background:#f6f7f9}
+    .kvs{display:grid;grid-template-columns:200px 1fr;gap:.4rem .75rem}
+    .tag{display:inline-block;background:#eef7ff;border:1px solid #d6e8fb;color:#1a64a6;border-radius:6px;padding:.08rem .45rem;font-size:.84rem}
+    .sep{height:1px;background:#f0f2f5;margin:1rem 0}
+    a.anchor{color:inherit;text-decoration:none}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Graph Theory — Comprehensive Study Notes</h1>
+    <p>Definitions · Graph Classes · Representations · Algorithms · Properties · Spectral Insights · Applications · Pitfalls</p>
+  </header>
+
+  <!-- Table of Contents -->
+  <main>
+    <nav class="toc">
+      <strong>Contents</strong>
+      <ol>
+        <li><a href="#def">Definition & Why Graphs Matter</a></li>
+        <li><a href="#classes">Graph Classes</a></li>
+        <li><a href="#repr">Graph Representations & Complexity</a></li>
+        <li><a href="#props">Core Properties & Theorems</a></li>
+        <li><a href="#alg">Core Algorithms (with pseudocode)</a></li>
+        <li><a href="#opt">Optimization & Flows</a></li>
+        <li><a href="#spectral">Matrices & Spectral Graph Theory (intro)</a></li>
+        <li><a href="#random">Random & Real-World Networks</a></li>
+        <li><a href="#apps">Applications in CS & Engineering</a></li>
+        <li><a href="#pitfalls">Common Pitfalls & Study Tips</a></li>
+        <li><a href="#refs">References</a></li>
+      </ol>
+    </nav>
+
+    <!-- 1. Definition -->
+    <section id="def">
+      <h2>1) Definition & Why Graphs Matter</h2>
+      <p>A <strong>graph</strong> \(G=(V,E)\) consists of a set of <em>vertices</em> \(V\) and a set of <em>edges</em> \(E\subseteq V\times V\) (directed) or \(\{\{u,v\}\mid u,v\in V\}\) (undirected). Vertices represent entities (cities, users, servers), and edges represent relations (roads, follows, network links).</p>
+      <div class="info">
+        <strong>Why graphs?</strong> Many complex systems are fundamentally about <em>connections</em>. Graphs turn messy reality into clean mathematical objects so we can analyze reachability, efficiency, bottlenecks, robustness, and optimal design.
+      </div>
+      <div class="kvs">
+        <div>Vertex (node)</div><div>Entity/object</div>
+        <div>Edge (link)</div><div>Relationship/connection</div>
+        <div>Degree</div><div>Number of incident edges (in/out-degree for directed)</div>
+        <div>Path</div><div>Sequence of edges connecting vertices</div>
+        <div>Cycle</div><div>Closed path with distinct vertices (except start=end)</div>
+        <div>Connected</div><div>Every pair of vertices is joined by some path (undirected)</div>
+        <div>SCC</div><div>Strongly connected component (directed): each vertex reachable from each other</div>
+      </div>
+    </section>
+
+    <!-- 2. Graph Classes -->
+    <section id="classes">
+      <h2>2) Graph Classes</h2>
+      <div class="grid two">
+        <div>
+          <h3>2.1 Undirected</h3>
+          <p>Edges are unordered pairs \(\{u,v\}\). Models symmetric relations (friendship, peer links).</p>
+          <h3>2.2 Directed (Digraph)</h3>
+          <p>Edges are ordered pairs \((u,v)\). Models asymmetric relations (follow, hyperlink, dependency).</p>
+          <h3>2.3 Weighted</h3>
+          <p>Edges carry weights (cost/distance/time). Backbone of shortest path, MST, and flow cost problems.</p>
+          <h3>2.4 Trees</h3>
+          <p>Connected, acyclic graphs. Unique simple path between any two vertices. Rooted trees model hierarchies.</p>
+          <ul>
+            <li>Properties (for tree with \(n\) vertices): \(E=n-1\); any extra edge creates a cycle.</li>
+            <li>Spanning tree: a subgraph that is a tree containing all vertices.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>2.5 Bipartite</h3>
+          <p>Vertex set partitions into \(L\) and \(R\), edges only between \(L\) and \(R\). <em>Equivalent to 2-colorable.</em></p>
+          <ul>
+            <li>No odd-length cycles.</li>
+            <li>Core for matching/assignment problems.</li>
+          </ul>
+          <h3>2.6 DAG (Directed Acyclic Graph)</h3>
+          <p>No directed cycles. Represents precedence constraints (scheduling, build systems).</p>
+          <h3>2.7 Planar</h3>
+          <p>Drawable without edge crossings. Euler’s formula \(V-E+F=2\) (connected), forbidden minors \(K_5, K_{3,3}\) characterize non-planarity (Kuratowski).</p>
+          <h3>2.8 Complete \(K_n\)</h3>
+          <p>All pairs connected. Extremal/worst-case analyses; \(|E|=\frac{n(n-1)}{2}\) (undirected).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Representations -->
+    <section id="repr">
+      <h2>3) Graph Representations & Complexity</h2>
+      <div class="grid two">
+        <div>
+          <h3>Adjacency Matrix</h3>
+          <ul>
+            <li>Space: \(O(n^2)\)</li>
+            <li>Edge lookup: \(O(1)\)</li>
+            <li>Good for dense graphs; easy to use with linear algebra.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Adjacency List</h3>
+          <ul>
+            <li>Space: \(O(n+m)\)</li>
+            <li>Iterate neighbors: proportional to degree</li>
+            <li>Best for sparse graphs; most algorithms assume this.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note">
+        <strong>Rule of thumb:</strong> Sparse \( \Rightarrow \) lists; Dense \( \Rightarrow \) matrix. This choice affects asymptotic runtime and memory footprint.
+      </div>
+    </section>
+
+    <!-- 4. Properties & Theorems -->
+    <section id="props">
+      <h2>4) Core Properties & Theorems</h2>
+      <div class="grid two">
+        <div>
+          <h3>Connectivity</h3>
+          <ul>
+            <li>Bridges (cut edges) & articulation points (cut vertices) split components.</li>
+            <li>k-connectivity measures robustness. Tarjan’s algorithm finds articulation points in \(O(n+m)\).</li>
+          </ul>
+          <h3>Eulerian vs Hamiltonian</h3>
+          <ul>
+            <li><strong>Eulerian circuit</strong> (undirected): all vertices have even degree and graph is connected (ignoring isolated vertices).</li>
+            <li><strong>Eulerian trail</strong>: exactly 0 or 2 odd-degree vertices.</li>
+            <li><strong>Hamiltonian cycle</strong>: visit each vertex once — NP-complete (Dirac/Ore give sufficient conditions, not necessary).</li>
+          </ul>
+          <h3>Coloring</h3>
+          <ul>
+            <li>Chromatic number \(\chi(G)\): minimum colors to color vertices with no equal colors on an edge.</li>
+            <li>2-colorable \( \Leftrightarrow \) bipartite. General vertex coloring is NP-hard.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Planarity</h3>
+          <ul>
+            <li>Euler’s formula \(V-E+F=2\) (connected, planar) implies \(E \le 3V-6\) for \(V\ge 3\) (simple planar graphs).</li>
+            <li>Four Color Theorem (every planar graph \(\chi\le 4\)); five-color proof is elementary.</li>
+          </ul>
+          <h3>Matchings</h3>
+          <ul>
+            <li>Maximum matching in bipartite graphs relates to max-flow (Kőnig’s theorem: size of maximum matching = size of minimum vertex cover in bipartite graphs).</li>
+          </ul>
+          <h3>SCC (Directed)</h3>
+          <ul>
+            <li>Kosaraju / Tarjan algorithms find SCCs in \(O(n+m)\).</li>
+            <li>Condensation graph of SCCs is a DAG.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Algorithms -->
+    <section id="alg">
+      <h2>5) Core Algorithms (with pseudocode)</h2>
+      <div class="grid two">
+        <div>
+          <h3>BFS (breadth-first search)</h3>
+          <p>Unweighted shortest-path layers; detects bipartiteness; \(O(n+m)\).</p>
+<pre><code># BFS from source s
+dist = [-1]*n; dist[s]=0
+q = [s]
+while q:
+  u = q.pop(0)
+  for v in adj[u]:
+    if dist[v] == -1:
+      dist[v] = dist[u]+1
+      q.append(v)
+</code></pre>
+
+          <h3>DFS (depth-first search)</h3>
+          <p>Cycle detection, topological sort (on DAG), articulation/bridges with timestamps.</p>
+        </div>
+        <div>
+          <h3>Dijkstra (non-negative weights)</h3>
+          <p>Single-source shortest paths; \(O((n+m)\log n)\) with heap. Don’t use with negative edges.</p>
+<pre><code># Dijkstra with min-heap
+dist = [INF]*n; dist[s]=0
+pq = [(0,s)]
+while pq:
+  d,u = heappop(pq)
+  if d != dist[u]: continue
+  for v,w in adj[u]:
+    if dist[v] > d + w:
+      dist[v] = d + w
+      heappush(pq, (dist[v], v))
+</code></pre>
+
+          <h3>Bellman–Ford (negative edges okay)</h3>
+          <p>\(O(nm)\); detects negative cycles (if improvement after \(n-1\) relaxations).</p>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <h3>Topological Sort (DAG)</h3>
+          <p>Kahn’s algorithm (in-degree 0 queue) or DFS postorder. Orders tasks respecting dependencies.</p>
+<pre><code># Kahn's algorithm
+in_deg = count_in_degrees()
+q = [v for v in V if in_deg[v]==0]
+order=[]
+while q:
+  u = q.pop(0); order.append(u)
+  for v in adj[u]:
+    in_deg[v]-=1
+    if in_deg[v]==0: q.append(v)
+</code></pre>
+
+          <h3>Kruskal (MST)</h3>
+          <p>Sort edges, add if no cycle (Union–Find). Correctness by cut/cycle properties.</p>
+<pre><code># Union-Find helpers
+find(x): parent compression
+union(a,b): by rank/size
+</code></pre>
+        </div>
+        <div>
+          <h3>Prim (MST)</h3>
+          <p>Grow a tree from a seed using a min-heap of incident edges; \(O(m\log n)\).</p>
+          <h3>Articulation/Bridges (Tarjan)</h3>
+          <p>DFS with discovery/low-link times to spot critical vertices/edges in \(O(n+m)\).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Optimization & Flows -->
+    <section id="opt">
+      <h2>6) Optimization & Flows</h2>
+      <div class="grid two">
+        <div>
+          <h3>Max Flow / Min Cut</h3>
+          <p>Ford–Fulkerson (augmenting paths), Edmonds–Karp (BFS, \(O(nm^2)\)), Dinic (\(O(n^2 m)\)). The <em>max-flow min-cut theorem</em>: maximum \(s\to t\) flow equals minimum \(s\text{-}t\) cut capacity.</p>
+          <h3>Bipartite Matching</h3>
+          <p>Reduce to flow (source→left, left→right edges cap 1, right→sink), or use Hopcroft–Karp (\(O(\sqrt{n}m)\)).</p>
+        </div>
+        <div>
+          <h3>Shortest Path Variants</h3>
+          <ul>
+            <li><strong>A*</strong>: heuristic-guided Dijkstra; admissible consistent heuristic required.</li>
+            <li><strong>Bellman–Ford</strong>: handles negatives; use to detect neg cycles.</li>
+            <li><strong>Johnson’s algorithm</strong>: reweights to run Dijkstra from all sources efficiently.</li>
+          </ul>
+          <h3>Minimum-Cost Flow</h3>
+          <p>Optimizes cost subject to capacity/flow conservation; used for assignment, transportation.</p>
+        </div>
+      </div>
+      <div class="ok">
+        <strong>MST cut & cycle properties (proof sketch):</strong> The lightest edge crossing any cut is safe to include; the heaviest edge in any cycle is safe to exclude. These justify Kruskal/Prim correctness.
+      </div>
+    </section>
+
+    <!-- 7. Matrices & Spectral -->
+    <section id="spectral">
+      <h2>7) Matrices & Spectral Graph Theory (Intro)</h2>
+      <div class="grid two">
+        <div>
+          <h3>Adjacency Matrix \(A\)</h3>
+          <ul>
+            <li>\(A_{ij}=1\) if edge \(i\text{-}j\) exists (weights for weighted graphs).</li>
+            <li>\((A^k)_{ij}\) counts the number of length-\(k\) walks from \(i\) to \(j\).</li>
+          </ul>
+          <h3>Degree Matrix \(D\)</h3>
+          <ul><li>Diagonal with \(D_{ii}= \deg(i)\).</li></ul>
+          <h3>Laplacian \(L=D-A\)</h3>
+          <ul>
+            <li>Positive semidefinite; number of zero eigenvalues equals number of connected components.</li>
+            <li><em>Kirchhoff’s Matrix–Tree Theorem</em>: any cofactor of \(L\) equals the number of spanning trees.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Spectral Intuition</h3>
+          <ul>
+            <li>Fiedler value (second-smallest eigenvalue of \(L\)) relates to connectivity/expansion.</li>
+            <li>Eigenvector centrality/PageRank: importance proportional to neighbors’ importance.</li>
+            <li>Cheeger-type inequalities link cuts and Laplacian spectrum.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Random & Real-World -->
+    <section id="random">
+      <h2>8) Random & Real-World Networks</h2>
+      <div class="grid two">
+        <div>
+          <h3>Erdős–Rényi \(G(n,p)\)</h3>
+          <ul>
+            <li>Edges appear independently with prob \(p\); phase transitions (e.g., giant component threshold near \(p\approx 1/n\)).</li>
+          </ul>
+          <h3>Small-World</h3>
+          <ul><li>High clustering, small diameter (Watts–Strogatz); explains “six degrees of separation.”</li></ul>
+        </div>
+        <div>
+          <h3>Scale-Free</h3>
+          <ul><li>Power-law degree distribution; robust to random failure, fragile to targeted attacks.</li></ul>
+          <h3>Community & Centrality</h3>
+          <ul>
+            <li>Community detection (modularity, spectral, Louvain).</li>
+            <li>Centrality: degree, closeness, betweenness, eigenvector.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Applications -->
+    <section id="apps">
+      <h2>9) Applications in CS & Engineering</h2>
+      <div class="grid two">
+        <div>
+          <ul>
+            <li><strong>Routing:</strong> OSPF uses Dijkstra to compute shortest paths.</li>
+            <li><strong>Compilers/Build systems:</strong> DAGs for dependency and topological order.</li>
+            <li><strong>Databases:</strong> Query plans and join ordering as graphs; graph DBs (Cypher, Gremlin).</li>
+            <li><strong>Security:</strong> Attack graphs, lateral-movement modeling, trust graphs.</li>
+            <li><strong>Vision/ML:</strong> CRFs, GNNs, knowledge graphs, label propagation.</li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li><strong>Operations Research:</strong> Flows/matchings for logistics & assignments.</li>
+            <li><strong>Web Search:</strong> PageRank/eigenvector centrality on the link graph.</li>
+            <li><strong>Version Control:</strong> Commits as DAGs; merges and ancestry.</li>
+            <li><strong>Scheduling:</strong> Critical path, resource allocation on DAGs.</li>
+            <li><strong>Maps/Geo:</strong> Shortest paths, MSTs for infrastructure planning.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Pitfalls & Study Tips -->
+    <section id="pitfalls">
+      <h2>10) Common Pitfalls & Study Tips</h2>
+      <ul>
+        <li><strong>Dijkstra with negative weights:</strong> Don’t. Use Bellman–Ford or reweighting (Johnson).</li>
+        <li><strong>Assuming bipartite without checking odd cycles:</strong> run BFS coloring to be sure.</li>
+        <li><strong>MST vs shortest-path tree:</strong> Not the same; MST minimizes total edge weight, not distances from a source.</li>
+        <li><strong>Connectivity in directed graphs:</strong> weak vs strong connectivity are different.</li>
+        <li><strong>Planarity assumptions:</strong> Use \(E \le 3V-6\) or forbidden minors as quick checks.</li>
+      </ul>
+      <div class="ok">
+        <strong>Exam checklist:</strong> Graph type? (directed/weighted?) Representation? Complexity? Correct algorithm for constraints (neg weights, capacities)? Invariants (cuts, cycle properties)? Proof idea (exchange, contradiction)?
+      </div>
+    </section>
+
+    <!-- 11. References -->
+    <section id="refs">
+      <h2>11) References (for further study)</h2>
+      <ul>
+        <li>West, D. B. <em>Introduction to Graph Theory</em>.</li>
+        <li>Cormen, Leiserson, Rivest, Stein. <em>Introduction to Algorithms</em> (CLRS).</li>
+        <li>Bollobás, B. <em>Modern Graph Theory</em>.</li>
+        <li>Easley & Kleinberg. <em>Networks, Crowds, and Markets</em>.</li>
+        <li>Diestel, R. <em>Graph Theory</em> (free electronic edition available from the author).</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
