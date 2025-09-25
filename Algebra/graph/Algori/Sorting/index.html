@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sorting Algorithms: Theory and Practice</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      line-height: 1.6;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    code {
+      background: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #bbb;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    .highlight {
+      background: #dff0d8;
+      border-left: 5px solid #3c763d;
+      padding: 10px;
+      margin: 15px 0;
+    }
+    .meta {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    .Link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      padding: 0.6rem 1.2rem;
+      background: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      margin-left: 50%;
+      
+    }
+  </style>
+</head>
+<body>
+  <h1>Sorting Algorithms: Theory and Practice</h1>
+  <p class="meta">Posted on 2025.09.25</p>
+  <h2>1. Definition and Role</h2>
+  <p>
+    Sorting is the process of arranging data according to a defined order (e.g., ascending or descending).
+    Beyond aesthetics, sorting is a <strong>fundamental building block of computer science</strong>:
+  </p>
+  <ul>
+    <li><strong>Searching:</strong> Binary Search requires sorted data.</li>
+    <li><strong>Databases:</strong> Indexes and B-Trees rely on sorting principles.</li>
+    <li><strong>Algorithm Preprocessing:</strong> Many algorithms (e.g., Kruskal’s MST) depend on sorted input.</li>
+    <li><strong>Practical Uses:</strong> Statistics, machine learning, trading systems, search engines, OS scheduling.</li>
+  </ul>
+  
+  <div class="highlight">
+    <strong>Key Insight:</strong> Sorting is not just about ordering data—it is the gateway to efficient computation.
+  </div>
+  
+  <h2>2. Why Sorting Matters</h2>
+  <ol>
+    <li><strong>Efficient Searching:</strong> Advanced search algorithms require sorted data.</li>
+    <li><strong>Data Optimization:</strong> Structured data enables faster operations at scale.</li>
+    <li><strong>Performance:</strong> Algorithm choice can change execution time by orders of magnitude.</li>
+  </ol>
+  
+  <h2>3. Major Sorting Algorithms</h2>
+  
+  <h3>3.1 Bubble Sort</h3>
+  <p>
+    Idea: Repeatedly swap adjacent elements if they are in the wrong order.
+  </p>
+  <ul>
+    <li>Best Case: O(n)</li>
+    <li>Average/Worst Case: O(n²)</li>
+    <li>Space: O(1)</li>
+    <li>Stable: Yes</li>
+    <li><em>Usage:</em> Educational only; rarely practical.</li>
+  </ul>
+  
+  <h3>3.2 Selection Sort</h3>
+  <p>
+    Idea: Find the minimum and place it at the beginning, repeat for remaining elements.
+  </p>
+  <ul>
+    <li>Time: O(n²) in all cases</li>
+    <li>Space: O(1)</li>
+    <li>Stable: No</li>
+    <li><em>Strength:</em> Few swaps; useful when write cost is expensive.</li>
+  </ul>
+  
+  <h3>3.3 Insertion Sort</h3>
+  <p>
+    Idea: Insert each new element into its correct position in the already sorted portion.
+  </p>
+  <ul>
+    <li>Best: O(n)</li>
+    <li>Worst: O(n²)</li>
+    <li>Space: O(1)</li>
+    <li>Stable: Yes</li>
+    <li><em>Strength:</em> Very efficient on small or nearly sorted datasets.</li>
+  </ul>
+  
+  <h3>3.4 Merge Sort</h3>
+  <p>
+    Idea: Divide the array in half, sort recursively, then merge.
+  </p>
+  <ul>
+    <li>Time: O(n log n) in all cases</li>
+    <li>Space: O(n)</li>
+    <li>Stable: Yes</li>
+    <li><em>Strength:</em> Reliable for large data sets; external sorting.</li>
+  </ul>
+  
+  <h3>3.5 Quick Sort</h3>
+  <p>
+    Idea: Choose a pivot, partition data into smaller and larger, sort recursively.
+  </p>
+  <ul>
+    <li>Average: O(n log n)</li>
+    <li>Worst: O(n²)</li>
+    <li>Space: O(log n)</li>
+    <li>Stable: No</li>
+    <li><em>Strength:</em> Fast in practice; basis of many standard libraries.</li>
+  </ul>
+  
+  <h3>3.6 Heap Sort</h3>
+  <p>
+    Idea: Use a heap data structure to repeatedly extract min/max and build sorted list.
+  </p>
+  <ul>
+    <li>Time: O(n log n)</li>
+    <li>Space: O(1)</li>
+    <li>Stable: No</li>
+    <li><em>Strength:</em> In-place and memory-efficient.</li>
+  </ul>
+  
+  <h2>4. Performance Comparison</h2>
+  <table>
+    <tr>
+      <th>Algorithm</th>
+      <th>Best</th>
+      <th>Average</th>
+      <th>Worst</th>
+      <th>Space</th>
+      <th>Stable?</th>
+      <th>Notes</th>
+    </tr>
+    <tr>
+      <td>Bubble</td>
+      <td>O(n)</td>
+      <td>O(n²)</td>
+      <td>O(n²)</td>
+      <td>O(1)</td>
+      <td>Yes</td>
+      <td>Simple, educational</td>
+    </tr>
+    <tr>
+      <td>Selection</td>
+      <td>O(n²)</td>
+      <td>O(n²)</td>
+      <td>O(n²)</td>
+      <td>O(1)</td>
+      <td>No</td>
+      <td>Few swaps</td>
+    </tr>
+    <tr>
+      <td>Insertion</td>
+      <td>O(n)</td>
+      <td>O(n²)</td>
+      <td>O(n²)</td>
+      <td>O(1)</td>
+      <td>Yes</td>
+      <td>Great for small or sorted data</td>
+    </tr>
+    <tr>
+      <td>Merge</td>
+      <td>O(n log n)</td>
+      <td>O(n log n)</td>
+      <td>O(n log n)</td>
+      <td>O(n)</td>
+      <td>Yes</td>
+      <td>Reliable; large datasets</td>
+    </tr>
+    <tr>
+      <td>Quick</td>
+      <td>O(n log n)</td>
+      <td>O(n log n)</td>
+      <td>O(n²)</td>
+      <td>O(log n)</td>
+      <td>No</td>
+      <td>Fastest on average</td>
+    </tr>
+    <tr>
+      <td>Heap</td>
+      <td>O(n log n)</td>
+      <td>O(n log n)</td>
+      <td>O(n log n)</td>
+      <td>O(1)</td>
+      <td>No</td>
+      <td>In-place; memory efficient</td>
+    </tr>
+  </table>
+  
+  <h2>5. Practical Considerations</h2>
+  <ul>
+    <li><strong>Data Size:</strong> Small → Insertion; Large → Merge/Quick/Heap.</li>
+    <li><strong>Memory:</strong> Limited → Heap; Enough RAM → Merge.</li>
+    <li><strong>Data Properties:</strong> Nearly sorted → Insertion.</li>
+    <li><strong>Stability:</strong> Preserve order of duplicates → Merge.</li>
+  </ul>
+  
+  <h2>6. Reflection</h2>
+  <p>
+    Studying sorting algorithms reveals a key truth: it’s not just about ordering data. The true skill lies in <strong>choosing the right algorithm for the right context</strong>.
+    In practice, developers must balance performance, stability, memory, and dataset size. Sorting, therefore, is the starting point of strategic problem-solving in computer science.
+  </p>
+   <a href="https://e2yeong.github.io/ComputerScience/Algebra/graph/Algori"><p class="Link">Back</p></a>
+  <a href="https://e2yeong.github.io/ComputerScience/Algebra/graph/Algori/sorting/"><p class="Link">Next</p></a>
+</body>
+</html>
