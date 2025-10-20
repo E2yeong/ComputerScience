@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>🔍 Searching Algorithms — Finding Data Efficiently</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#f8f9fb; --fg:#1f2937; --muted:#6b7280; --brand:#1d3557; --accent:#2563eb;
+ --card:#fff; --border:#e5e7eb; --info:#eef7ff; --info-b:#cfe4ff;
+ --note:#fff7e6; --note-b:#ffd591; --ok:#e8f7ef; --ok-b:#bfe9d1;
+}
+body{margin:0;font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.7}
+header{background:var(--brand);color:#fff;text-align:center;padding:1.8rem 1rem}
+header h1{margin:0 0 .3rem;font-size:1.7rem}
+main{max-width:1000px;margin:2rem auto;padding:0 1rem}
+section{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.06);padding:1.4rem 1.2rem;margin-bottom:1.25rem}
+h2{margin:0 0 .8rem;color:var(--brand);border-bottom:2px solid #f0f2f5;padding-bottom:.4rem;font-size:1.3rem}
+h3{margin:1rem 0 .4rem;color:#2f3e56}
+.info,.note,.ok{border-radius:10px;padding:.8rem 1rem;margin:1rem 0}
+.info{background:var(--info);border:1px solid var(--info-b);border-left:4px solid #1e6ad6}
+.note{background:var(--note);border:1px solid var(--note-b);border-left:4px solid #f59e0b}
+.ok{background:var(--ok);border:1px solid var(--ok-b);border-left:4px solid #22a06b}
+    .meta {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    .Link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      padding: 0.6rem 1.2rem;
+      background: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      margin-left: 50%;
+      
+    }
+table{width:100%;border-collapse:collapse;margin:1rem 0}
+th,td{border:1px solid var(--border);padding:.5rem;text-align:center}
+th{background:#f7f8fa}
+ul{margin:.5rem 0 1rem 1.2rem}
+</style>
+</head>
+<body>
+<header>
+<h1>🔍 Searching Algorithms — Finding Data Efficiently</h1>
+<p>Linear · Binary · Hash · Tree · Graph Search Explained Simply</p>
+</header>
+
+<main>
+<section>
+<h2>1️⃣ What is Searching?</h2>
+    <p class="meta">Posted on 2025.10.20</p>
+<p><strong>Searching</strong> is the process of finding a specific value from stored data.  
+In computer science, it’s the <strong>foundation of data processing</strong> — used in databases, web searches, file systems, and AI pathfinding.</p>
+
+<div class="info">
+<strong>In simple terms:</strong><br>
+Searching is about finding what you need, as fast as possible, among huge amounts of data.
+</div>
+</section>
+
+<section>
+<h2>2️⃣ Types of Searching Algorithms</h2>
+<ul>
+<li><strong>Unordered Search:</strong> Works even if data isn’t sorted, but slower. <em>Example: Linear Search</em></li>
+<li><strong>Ordered Search:</strong> Requires sorted data, but much faster. <em>Example: Binary Search</em></li>
+<li><strong>Others:</strong> Hash Search, Tree Search, Graph Search — each designed for specific structures.</li>
+</ul>
+</section>
+
+<section>
+<h2>3️⃣ Key Searching Algorithms</h2>
+
+<h3>3.1 Linear Search</h3>
+<p>Compares each element one by one until the target is found.</p>
+<ul>
+<li>Time complexity: Worst \(O(n)\)</li>
+<li>Pros: Simple, works with unsorted data</li>
+<li>Cons: Slow for large datasets</li>
+<li>Used in: Small lists, unsorted data</li>
+</ul>
+
+<h3>3.2 Binary Search</h3>
+<p>Divides a sorted list in half repeatedly to find the target.</p>
+<ul>
+<li>Time complexity: \(O(\log n)\)</li>
+<li>Pros: Very fast</li>
+<li>Cons: Requires sorted data</li>
+<li>Used in: Databases, search engines, optimization problems</li>
+</ul>
+
+<h3>3.3 Hash Search</h3>
+<p>Computes an address directly using a <strong>hash function</strong>.</p>
+<ul>
+<li>Average time: \(O(1)\), Worst: \(O(n)\) (in case of collisions)</li>
+<li>Used in: Hash tables, caches, authentication systems, Python’s <code>dict</code></li>
+</ul>
+<div class="note">
+It’s the fastest in theory, but only if the hash function and collision handling are well designed.
+</div>
+
+<h3>3.4 Tree Search</h3>
+<p>Uses node connections to organize and locate data efficiently.</p>
+<ul>
+<li>BST: Average \(O(\log n)\), Worst \(O(n)\)</li>
+<li>AVL / Red-Black Tree: Always \(O(\log n)\)</li>
+<li>Used in: File systems, database indexing</li>
+</ul>
+
+<h3>3.5 Graph Search</h3>
+<p>Explores nodes and edges within a graph structure.</p>
+<ul>
+<li><strong>DFS (Depth-First Search):</strong> Goes deep first (uses recursion/stack)</li>
+<li><strong>BFS (Breadth-First Search):</strong> Explores neighbors first (uses queue)</li>
+<li>Time: \(O(V+E)\)</li>
+<li>Used in: Pathfinding, network analysis, AI algorithms (A*, Dijkstra)</li>
+</ul>
+</section>
+
+<section>
+<h2>4️⃣ Comparison of Algorithms</h2>
+<table>
+<tr><th>Algorithm</th><th>Sorted?</th><th>Best</th><th>Average</th><th>Worst</th><th>Common Use</th></tr>
+<tr><td>Linear Search</td><td>No</td><td>O(1)</td><td>O(n)</td><td>O(n)</td><td>Small data</td></tr>
+<tr><td>Binary Search</td><td>Yes</td><td>O(1)</td><td>O(log n)</td><td>O(log n)</td><td>DB indexing</td></tr>
+<tr><td>Hash Search</td><td>No</td><td>O(1)</td><td>O(1)</td><td>O(n)</td><td>Caching, dictionaries</td></tr>
+<tr><td>Tree Search</td><td>Yes</td><td>O(log n)</td><td>O(log n)</td><td>O(n)</td><td>Filesystems</td></tr>
+<tr><td>DFS / BFS</td><td>Graph</td><td>-</td><td>O(V+E)</td><td>O(V+E)</td><td>Pathfinding, AI</td></tr>
+</table>
+</section>
+
+<section>
+<h2>5️⃣ Searching in the Real World</h2>
+<ul>
+<li><strong>Search Engines:</strong> Use hash indexing + tree structures for lightning-fast lookups.</li>
+<li><strong>Artificial Intelligence:</strong> DFS/BFS power route optimization and game AI.</li>
+<li><strong>Cybersecurity:</strong> Hash-based lookups verify passwords and data integrity.</li>
+<li><strong>Databases:</strong> B-Tree and B+Tree indexes accelerate massive data queries.</li>
+</ul>
+<div class="ok">
+In short — how efficiently you find data determines how powerful your system can be.
+</div>
+</section>
+
+<section>
+<h2>6️⃣ Reflection</h2>
+<p>Studying search algorithms teaches one key lesson:  
+<strong>Efficiency in data retrieval is the essence of computer science.</strong></p>
+<p>Linear search fits simple data, binary and hash search fit structured data, and graph search fits relational data.  
+Searching is not just repetition — it’s the art of structured logic and intelligent access.</p>
+</section>
+</main>
+  <a href="https://e2yeong.github.io/ComputerScience/Algebra/graph/Algori/Sorting"><p class="Link">Back</p></a>
+  <a href="https://e2yeong.github.io/ComputerScience/Algebra/graph/Algori/sorting/Searching/"><p class="Link">Next</p></a>
+</body>
+</html>
