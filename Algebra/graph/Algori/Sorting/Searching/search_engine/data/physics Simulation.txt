@@ -1,0 +1,3 @@
+Physics simulations use mathematical models to predict natural phenomena.
+Search and optimization algorithms help find stable solutions in complex systems.
+From particle motion to astrophysics, computation is essential to analysis.

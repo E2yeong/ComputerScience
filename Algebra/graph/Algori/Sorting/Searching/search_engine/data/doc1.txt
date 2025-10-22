@@ -1,0 +1,3 @@
+Computer science is the study of algorithms, data structures, and computational systems.
+It focuses on problem solving using programming languages such as Python and C++.
+Understanding searching and sorting algorithms is essential for efficient data management.

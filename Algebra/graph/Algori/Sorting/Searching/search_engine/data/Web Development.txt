@@ -1,0 +1,3 @@
+Web development combines frontend and backend technologies to create applications.
+Search bars in websites rely on efficient indexing and query matching algorithms.
+JavaScript and Python are popular languages for web-based search engines.

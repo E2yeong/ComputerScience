@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<section>
+  {% if query %}
+    <h2>Results for: “{{ query }}”</h2>
+    {% if results %}
+      <ul class="results">
+        {% for r in results %}
+          <li class="card">
+            <div class="title">
+              <strong>{{ r.file }}</strong>
+              <span class="badge">score: {{ '%.6f'|format(r.score) }} | hits: {{ r.hits }}</span>
+            </div>
+            <p class="snippet">{{ r.snippet }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="empty">No results found.</div>
+    {% endif %}
+  {% else %}
+    <div class="empty">Enter a query above to search.</div>
+  {% endif %}
+</section>
+{% if query %}
+  <div style="margin:12px 0;">
+    <a href="{{ url_for('visualize_page') }}?q={{ query|urlencode }}">
+      🔍 Visualize Search Process
+    </a>
+  </div>
+{% endif %}
+{% endblock %}

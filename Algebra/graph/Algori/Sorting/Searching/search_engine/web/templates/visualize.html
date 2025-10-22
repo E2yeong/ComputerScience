@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Searching for: "{{ query }}"</h2>
+<div id="words"></div>
+
+<script id="steps-data" type="application/json">
+  {{ steps|tojson|safe }}
+</script>
+
+<script>
+const steps = JSON.parse(document.getElementById("steps-data").textContent);
+let container = document.getElementById("words");
+let i = 0;
+
+function showNext() {
+  if (i >= steps.length) return;
+  const step = steps[i];
+  const span = document.createElement("span");
+  span.textContent = step.word + " ";
+  span.className = step.match ? "hit" : "miss";
+  container.appendChild(span);
+  i++;
+  setTimeout(showNext, 20); // 속도 조절
+}
+if (steps.length > 0) {
+  showNext();
+} else {
+  container.innerHTML = "<p style='color:#777'>No data to visualize.</p>";
+}
+</script>
+
+<style>
+#words { line-height: 2; font-size: 18px; }
+.hit { color: #00b894; font-weight: bold; }
+.miss { color: #ccc; }
+</style>
+{% endblock %}
