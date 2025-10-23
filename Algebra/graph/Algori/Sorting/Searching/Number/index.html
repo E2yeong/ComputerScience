@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Number Theory & Cryptography – Study Guide</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; line-height: 1.6; margin: 0; padding: 0; background: #f8f9fa; color: #222; }
+    header { background: #2c3e50; color: #fff; padding: 1.5rem 2rem; text-align: center; }
+    section { max-width: 950px; margin: 2rem auto; background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.08); }
+    h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
+    h3 { color: #34495e; margin-top: 1.4rem; }
+    ul { padding-left: 1.5rem; }
+    li { margin-bottom: 0.5rem; }
+    .formula { background: #eef7ff; border-left: 4px solid #3498db; padding: 0.7rem; margin: 1rem 0; font-family: monospace; }
+    .note { background: #fff3cd; border-left: 4px solid #ffcc00; padding: 0.7rem; margin: 1rem 0; border-radius: 6px; }
+    .example { background: #e8f8f5; border-left: 4px solid #1abc9c; padding: 0.7rem; margin: 1rem 0; }
+    .meta { font-size: 0.9rem; color: #555; margin-bottom: 1rem; font-style: italic; }
+    .Link { display: inline-block; margin-bottom: 1.5rem; padding: 0.6rem 1.2rem; background: #3498db; color: white; text-decoration: none; border-radius: 6px; margin-left: 50%; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🔢 Number Theory & Cryptography</h1>
+    <p>How Mathematics Protects the Digital World</p>
+  </header>
+
+  <section>
+    <p class="meta">Posted on 2025.10.20</p>
+
+    <h2>1️⃣ What Is Number Theory?</h2>
+    <p><strong>Number theory</strong> is the study of integers — numbers like 1, 2, 3, 4 — and the patterns and relationships between them.  
+    What seems like “old math” has become the heart of <strong>modern computer security</strong>.  
+    Every time you connect to a secure website (<code>https://</code>) or enter a password, number theory quietly keeps your data safe.</p>
+  </section>
+
+  <section>
+    <h2>2️⃣ Core Concepts of Number Theory</h2>
+
+    <h3>Prime Numbers</h3>
+    <p>Numbers divisible only by 1 and themselves (2, 3, 5, 7, 11...).</p>
+    <div class="note">
+      Multiplying two large primes is easy,  
+      but factoring the result back into those primes is extremely difficult.  
+      That difficulty is the foundation of RSA encryption.
+    </div>
+
+    <h3>Greatest Common Divisor (GCD)</h3>
+    <p>The largest integer that divides two numbers.</p>
+    <div class="formula">GCD(18, 24) = 6</div>
+    <p>Used to determine whether two numbers are <strong>coprime</strong> (share no factors) — essential in generating RSA keys via the Euclidean Algorithm.</p>
+
+    <h3>Congruence</h3>
+    <p>Two numbers are congruent if they have the same remainder when divided by a modulus.</p>
+    <div class="formula">17 ≡ 5 (mod 12)</div>
+    <p>In cryptography, this allows massive numbers to be handled efficiently using only remainders.</p>
+
+    <h3>Modular Arithmetic</h3>
+    <p>Also called “clock arithmetic” — once numbers reach a modulus, they wrap around.</p>
+    <div class="formula">13 mod 12 = 1</div>
+    <p>Encryption formulas often look like <code>message^key mod n</code>.  
+    Without modular arithmetic, secure encryption would be impossible.</p>
+
+    <h3>Euler’s Totient Function</h3>
+    <p>Counts the integers less than <em>n</em> that are coprime with <em>n</em>.</p>
+    <div class="formula">φ(9) = 6 → {1, 2, 4, 5, 7, 8}</div>
+    <p>Used in RSA to compute the private decryption key.  
+    It’s the mathematical bridge between “locking” and “unlocking” information.</p>
+  </section>
+
+  <section>
+    <h2>3️⃣ Applications of Number Theory in Cryptography</h2>
+
+    <h3>RSA Encryption (Rivest–Shamir–Adleman)</h3>
+    <ol>
+      <li>Choose two large primes, <em>p</em> and <em>q</em>, and multiply them → <em>n = p × q</em>.</li>
+      <li>Compute <em>φ(n) = (p − 1)(q − 1)</em>.</li>
+      <li>Select public key <em>e</em> and private key <em>d</em> such that:</li>
+    </ol>
+    <div class="formula">e × d ≡ 1 (mod φ(n))</div>
+    <p>The magic: it’s easy to multiply <em>p</em> and <em>q</em>, but nearly impossible to factor <em>n</em> back into them.</p>
+
+    <h3>Diffie–Hellman Key Exchange</h3>
+    <p>Allows two parties to generate the same secret key over an insecure channel —  
+    without ever sending the key itself.</p>
+    <div class="note">
+      Based on the <strong>discrete logarithm problem</strong>:  
+      exponentiation modulo <em>n</em> is easy,  
+      but finding the exponent (reverse operation) is practically impossible.
+    </div>
+
+    <h3>Elliptic Curve Cryptography (ECC)</h3>
+    <p>Uses algebraic structures on <strong>elliptic curves</strong> for encryption.  
+    Offers stronger security with much shorter keys compared to RSA.</p>
+    <div class="example">
+      Used in smartphones, blockchain systems, and cryptocurrencies —  
+      all built on elliptic curve mathematics.
+    </div>
+  </section>
+
+  <section>
+    <h2>4️⃣ Reflection</h2>
+    <p>Number theory shows how abstract mathematics can protect real-world information.  
+    From prime numbers to modular arithmetic, these concepts form the backbone of every secure digital transaction.  
+    In a world driven by data, <strong>security is mathematics in disguise</strong>.</p>
+  </section>
+
+  <a href="https://e2yeong.github.io/CS-Note/CS2/CS3/"><p class="Link">Back</p></a>
+  <a href="https://e2yeong.github.io/CS-Note/CS2/CS3/CS4/"><p class="Link">Next</p></a>
+</body>
+</html>
